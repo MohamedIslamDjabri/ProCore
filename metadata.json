@@ -1,0 +1,6 @@
+{
+  "name": "ProCore Commercial Roofing",
+  "description": "Engineered commercial and industrial roofing systems, flat roofing, elastomeric roof coatings, and asset lifecycle maintenance programs nationwide.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
