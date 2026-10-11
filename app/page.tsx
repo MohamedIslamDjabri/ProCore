@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
-import { SITE_CONFIG, CASE_STUDIES } from "@/constants/data";
+import { CASE_STUDIES } from "@/constants/data";
 import { TrustMetrics } from "@/components/sections/TrustMetrics";
 import { CommercialServicesGrid } from "@/components/sections/CommercialServicesGrid";
 import { WhyProCoreSection } from "@/components/sections/WhyProCoreSection";
@@ -11,6 +11,11 @@ import { SafetySection } from "@/components/sections/SafetySection";
 import { DownloadProfileSection } from "@/components/sections/DownloadProfileSection";
 import { CaseStudyCard } from "@/components/sections/CaseStudyCard";
 import { ConsultationQuoteForm } from "@/components/sections/ConsultationQuoteForm";
+import {
+  FadeIn,
+  StaggerContainer,
+  StaggerItem,
+} from "@/components/ui/MotionPrimitives";
 import {
   ShieldCheck,
   ArrowRight,
@@ -50,70 +55,81 @@ export default function HomePage() {
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
           {/* Technical Metadata Stamp */}
-          <div className="inline-flex items-center gap-2 bg-tertiary/80 text-tertiary-fixed px-3 py-1 mb-6 border border-tertiary-fixed/20 text-xs">
-            <ShieldCheck className="w-4 h-4 text-tertiary-fixed shrink-0" />
-            <span className="font-code-spec tracking-widest uppercase">
-              ASSET LIFECYCLE MANAGEMENT // SPEC-ID: 2024-NDL
-            </span>
-          </div>
+          <FadeIn delay={0.05} direction="down">
+            <div className="inline-flex items-center gap-2 bg-tertiary/80 text-tertiary-fixed px-3 py-1 mb-6 border border-tertiary-fixed/20 text-xs">
+              <ShieldCheck className="w-4 h-4 text-tertiary-fixed shrink-0" />
+              <span className="font-code-spec tracking-widest uppercase">
+                ASSET LIFECYCLE MANAGEMENT // SPEC-ID: 2024-NDL
+              </span>
+            </div>
+          </FadeIn>
 
           <div className="max-w-3xl space-y-6">
-            <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl text-surface tracking-tight leading-[1.08] font-bold">
-              Commercial Roofing Built for{" "}
-              <span className="text-tertiary-fixed">Performance.</span>
-            </h1>
-            <p className="font-body-lg text-inverse-primary leading-relaxed text-base sm:text-lg">
-              Reliable roofing systems, restorative liquid assemblies, elastomeric coatings, and continuous maintenance protocols for commercial and mission-critical industrial facilities across North America.
-            </p>
+            <FadeIn delay={0.12}>
+              <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl text-surface tracking-tight leading-[1.08] font-bold">
+                Commercial Roofing Built for{" "}
+                <span className="text-tertiary-fixed">Performance.</span>
+              </h1>
+            </FadeIn>
+
+            <FadeIn delay={0.2}>
+              <p className="font-body-lg text-inverse-primary leading-relaxed text-base sm:text-lg">
+                Reliable roofing systems, restorative liquid assemblies, elastomeric coatings, and continuous maintenance protocols for commercial and mission-critical industrial facilities across North America.
+              </p>
+            </FadeIn>
 
             {/* CTA Cluster */}
-            <div className="pt-2 flex flex-wrap items-center gap-4">
+            <FadeIn delay={0.28} className="pt-2 flex flex-wrap items-center gap-4">
               <Link
                 href="/contact"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-tertiary-container hover:bg-tertiary text-on-tertiary font-title-md uppercase tracking-wider text-xs transition-colors border border-tertiary font-bold shadow-md"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-tertiary-container hover:bg-tertiary text-on-tertiary font-title-md uppercase tracking-wider text-xs transition-all duration-200 hover:-translate-y-0.5 border border-tertiary font-bold shadow-md"
               >
                 <ShieldCheck className="w-4 h-4 text-tertiary-fixed" />
                 <span>Request a Commercial Quote</span>
               </Link>
               <Link
                 href="/projects"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-surface-container-lowest text-primary hover:bg-surface-container-high font-title-md uppercase tracking-wider text-xs transition-colors font-bold shadow-sm"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-surface-container-lowest text-primary hover:bg-surface-container-high font-title-md uppercase tracking-wider text-xs transition-all duration-200 hover:-translate-y-0.5 font-bold shadow-sm group"
               >
                 <span>View Our Projects</span>
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
-            </div>
+            </FadeIn>
           </div>
 
           {/* Compact Trust Protocol Ticker */}
-          <div className="mt-14 pt-6 bg-primary-container/40 p-4 border border-primary-container">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <div className="flex items-center gap-2 text-inverse-primary text-xs sm:text-sm">
+          <FadeIn delay={0.35} className="mt-14 pt-6 bg-primary-container/40 p-4 border border-primary-container">
+            <StaggerContainer
+              staggerDelay={0.07}
+              delayChildren={0.35}
+              className="grid grid-cols-2 md:grid-cols-4 gap-4"
+            >
+              <StaggerItem hoverLift={false} className="flex items-center gap-2 text-inverse-primary text-xs sm:text-sm">
                 <Building2 className="w-4 h-4 text-tertiary-fixed shrink-0" />
                 <span className="font-label-md uppercase tracking-wider">
                   Commercial Infrastructure
                 </span>
-              </div>
-              <div className="flex items-center gap-2 text-inverse-primary text-xs sm:text-sm">
+              </StaggerItem>
+              <StaggerItem hoverLift={false} className="flex items-center gap-2 text-inverse-primary text-xs sm:text-sm">
                 <Factory className="w-4 h-4 text-tertiary-fixed shrink-0" />
                 <span className="font-label-md uppercase tracking-wider">
                   Industrial Envelope
                 </span>
-              </div>
-              <div className="flex items-center gap-2 text-inverse-primary text-xs sm:text-sm">
+              </StaggerItem>
+              <StaggerItem hoverLift={false} className="flex items-center gap-2 text-inverse-primary text-xs sm:text-sm">
                 <Wrench className="w-4 h-4 text-tertiary-fixed shrink-0" />
                 <span className="font-label-md uppercase tracking-wider">
                   Preventive Maintenance
                 </span>
-              </div>
-              <div className="flex items-center gap-2 text-inverse-primary text-xs sm:text-sm">
+              </StaggerItem>
+              <StaggerItem hoverLift={false} className="flex items-center gap-2 text-inverse-primary text-xs sm:text-sm">
                 <Clock className="w-4 h-4 text-tertiary-fixed shrink-0" />
                 <span className="font-label-md uppercase tracking-wider">
                   24/7 Facility Response
                 </span>
-              </div>
-            </div>
-          </div>
+              </StaggerItem>
+            </StaggerContainer>
+          </FadeIn>
         </div>
       </section>
 
@@ -129,7 +145,7 @@ export default function HomePage() {
       {/* 5. FEATURED CASE STUDY PREVIEW */}
       <section className="w-full bg-surface py-16 lg:py-20 border-b border-outline-variant/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 space-y-8">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <FadeIn className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
               <span className="font-label-md uppercase tracking-wider text-secondary text-xs">
                 ENTERPRISE CASE STUDY
@@ -140,12 +156,12 @@ export default function HomePage() {
             </div>
             <Link
               href="/projects"
-              className="inline-flex items-center gap-1.5 font-label-md uppercase tracking-wider text-xs text-primary hover:text-secondary font-bold"
+              className="inline-flex items-center gap-1.5 font-label-md uppercase tracking-wider text-xs text-primary hover:text-secondary font-bold group"
             >
               <span>Explore All Case Studies</span>
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
-          </div>
+          </FadeIn>
 
           <CaseStudyCard caseStudy={featuredCaseStudy} />
         </div>

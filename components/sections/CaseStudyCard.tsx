@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { CaseStudy } from "@/constants/data";
+import { FadeIn } from "@/components/ui/MotionPrimitives";
 import { ShieldCheck, Calendar, Layers, Maximize2, CheckCircle2 } from "lucide-react";
 
 interface CaseStudyCardProps {
@@ -10,10 +11,10 @@ interface CaseStudyCardProps {
 
 export function CaseStudyCard({ caseStudy, reversed = false }: CaseStudyCardProps) {
   return (
-    <div className="w-full bg-surface-container-lowest shadow-sm border border-outline-variant/30 grid grid-cols-1 lg:grid-cols-12 overflow-hidden">
+    <FadeIn className="w-full bg-surface-container-lowest shadow-sm hover:shadow-md transition-shadow duration-300 border border-outline-variant/30 grid grid-cols-1 lg:grid-cols-12 overflow-hidden group">
       {/* Project Imagery */}
       <div
-        className={`lg:col-span-7 relative min-h-[340px] lg:min-h-[460px] ${
+        className={`lg:col-span-7 relative min-h-[340px] lg:min-h-[460px] overflow-hidden ${
           reversed ? "lg:order-2" : "lg:order-1"
         }`}
       >
@@ -21,7 +22,7 @@ export function CaseStudyCard({ caseStudy, reversed = false }: CaseStudyCardProp
           src={caseStudy.image}
           alt={caseStudy.imageAlt}
           fill
-          className="object-cover"
+          className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
           sizes="(max-width: 1024px) 100vw, 60vw"
           referrerPolicy="no-referrer"
         />
@@ -59,7 +60,7 @@ export function CaseStudyCard({ caseStudy, reversed = false }: CaseStudyCardProp
 
         {/* Technical Specs Matrix */}
         <div className="grid grid-cols-2 gap-3 font-body-sm">
-          <div className="p-3 bg-surface-container-low border-l-2 border-primary">
+          <div className="p-3 bg-surface-container-low border-l-2 border-primary group-hover:border-on-tertiary-container transition-colors">
             <div className="flex items-center gap-1.5 text-secondary text-xs uppercase font-medium">
               <Maximize2 className="w-3 h-3" />
               <span>Roof Area</span>
@@ -69,7 +70,7 @@ export function CaseStudyCard({ caseStudy, reversed = false }: CaseStudyCardProp
             </span>
           </div>
 
-          <div className="p-3 bg-surface-container-low border-l-2 border-primary">
+          <div className="p-3 bg-surface-container-low border-l-2 border-primary group-hover:border-on-tertiary-container transition-colors">
             <div className="flex items-center gap-1.5 text-secondary text-xs uppercase font-medium">
               <Layers className="w-3 h-3" />
               <span>System</span>
@@ -79,7 +80,7 @@ export function CaseStudyCard({ caseStudy, reversed = false }: CaseStudyCardProp
             </span>
           </div>
 
-          <div className="p-3 bg-surface-container-low border-l-2 border-primary">
+          <div className="p-3 bg-surface-container-low border-l-2 border-primary group-hover:border-on-tertiary-container transition-colors">
             <div className="flex items-center gap-1.5 text-secondary text-xs uppercase font-medium">
               <ShieldCheck className="w-3 h-3" />
               <span>Warranty</span>
@@ -89,7 +90,7 @@ export function CaseStudyCard({ caseStudy, reversed = false }: CaseStudyCardProp
             </span>
           </div>
 
-          <div className="p-3 bg-surface-container-low border-l-2 border-primary">
+          <div className="p-3 bg-surface-container-low border-l-2 border-primary group-hover:border-on-tertiary-container transition-colors">
             <div className="flex items-center gap-1.5 text-secondary text-xs uppercase font-medium">
               <Calendar className="w-3 h-3" />
               <span>Timeline</span>
@@ -111,6 +112,6 @@ export function CaseStudyCard({ caseStudy, reversed = false }: CaseStudyCardProp
           </span>
         </div>
       </div>
-    </div>
+    </FadeIn>
   );
 }

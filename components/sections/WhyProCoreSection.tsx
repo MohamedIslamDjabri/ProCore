@@ -3,6 +3,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { WHY_PROCORE_FEATURES, SITE_CONFIG } from "@/constants/data";
 import {
+  FadeIn,
+  StaggerContainer,
+  StaggerItem,
+} from "@/components/ui/MotionPrimitives";
+import {
   ShieldCheck,
   HardHat,
   SearchCheck,
@@ -39,18 +44,18 @@ export function WhyProCoreSection() {
   };
 
   return (
-    <section className="w-full bg-surface-container-low py-16 lg:py-24 border-y border-outline-variant/30">
+    <section className="w-full bg-surface-container-low py-16 lg:py-24 border-y border-outline-variant/30 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           {/* Left Column: Visual Rooftop Engineering & Spec Report */}
-          <div className="lg:col-span-5 space-y-6">
-            <div className="relative overflow-hidden bg-primary-container shadow-md border border-outline-variant/40">
-              <div className="relative w-full h-[420px]">
+          <FadeIn direction="right" className="lg:col-span-5 space-y-6">
+            <div className="relative overflow-hidden bg-primary-container shadow-md border border-outline-variant/40 group">
+              <div className="relative w-full h-[420px] overflow-hidden">
                 <Image
                   src="https://lh3.googleusercontent.com/aida-public/AB6AXuAd5LX-AVqX_r_NQDYXQNZOSNavB0hr6t0EqdLNMX7sc5hoei3ea94qHZRzatS0AR8sbuc-D9tNPhe26CLuKK-WQQ9cpgihU0ujNWumtxmAIBVXeS3Z751-jmZeKyf7EMhGqUusv0uG1Y5i-xyWdwM7XLVDxPFoDNRV04RwfC1O85F0xX4-1rqG5X9JxDyFfoz6njy1lEsNOMNNqqKmFDciN7EkAJoCMIhF9G6g-3NzJtnhYYDSpSps"
                   alt="Close up architectural detail of commercial rooftop construction showing workers in safety harnesses welding white TPO seams with precision equipment alongside large industrial HVAC chillers"
                   fill
-                  className="object-cover"
+                  className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                   sizes="(max-width: 1024px) 100vw, 40vw"
                   referrerPolicy="no-referrer"
                 />
@@ -93,22 +98,22 @@ export function WhyProCoreSection() {
                 Authorized Elite Master Applicator For:
               </span>
               <div className="grid grid-cols-3 gap-3 text-center">
-                <div className="p-3 bg-surface-container font-title-md text-primary font-bold text-sm tracking-wider">
+                <div className="p-3 bg-surface-container hover:bg-surface-container-high transition-colors font-title-md text-primary font-bold text-sm tracking-wider">
                   CARLISLE
                 </div>
-                <div className="p-3 bg-surface-container font-title-md text-primary font-bold text-sm tracking-wider">
+                <div className="p-3 bg-surface-container hover:bg-surface-container-high transition-colors font-title-md text-primary font-bold text-sm tracking-wider">
                   GAF COMM
                 </div>
-                <div className="p-3 bg-surface-container font-title-md text-primary font-bold text-sm tracking-wider">
+                <div className="p-3 bg-surface-container hover:bg-surface-container-high transition-colors font-title-md text-primary font-bold text-sm tracking-wider">
                   ELEVATE
                 </div>
               </div>
             </div>
-          </div>
+          </FadeIn>
 
           {/* Right Column: Heading & 8 Architectural Features */}
           <div className="lg:col-span-7 space-y-8">
-            <div>
+            <FadeIn>
               <span className="font-label-md uppercase tracking-widest text-secondary text-xs">
                 Operational Distinction
               </span>
@@ -118,14 +123,17 @@ export function WhyProCoreSection() {
               <p className="font-body-md text-on-surface-variant mt-2 text-[15px] leading-relaxed">
                 Industrial assets demand zero production interruption, absolute financial transparency, and unyielding field safety standards.
               </p>
-            </div>
+            </FadeIn>
 
             {/* Feature Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <StaggerContainer
+              staggerDelay={0.06}
+              className="grid grid-cols-1 sm:grid-cols-2 gap-4"
+            >
               {WHY_PROCORE_FEATURES.map((feature, idx) => (
-                <div
+                <StaggerItem
                   key={idx}
-                  className="bg-surface-container-lowest p-4 lg:p-5 shadow-xs border border-outline-variant/25 flex flex-col justify-between"
+                  className="bg-surface-container-lowest p-4 lg:p-5 shadow-xs border border-outline-variant/25 hover:border-primary/40 transition-colors flex flex-col justify-between"
                 >
                   <div>
                     <div className="flex items-center gap-2 text-primary mb-2">
@@ -138,19 +146,19 @@ export function WhyProCoreSection() {
                       {feature.description}
                     </p>
                   </div>
-                </div>
+                </StaggerItem>
               ))}
-            </div>
+            </StaggerContainer>
 
-            <div className="pt-2">
+            <FadeIn delay={0.2} className="pt-2">
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-3 px-6 py-3.5 bg-primary text-on-primary hover:bg-secondary font-title-md uppercase tracking-wider text-xs transition-colors shadow-xs"
+                className="inline-flex items-center gap-3 px-6 py-3.5 bg-primary text-on-primary hover:bg-secondary font-title-md uppercase tracking-wider text-xs transition-all duration-200 hover:-translate-y-0.5 shadow-xs group"
               >
                 <span>{SITE_CONFIG.secondaryCta}</span>
-                <ArrowRight className="w-4 h-4 text-tertiary-fixed" />
+                <ArrowRight className="w-4 h-4 text-tertiary-fixed group-hover:translate-x-1 transition-transform" />
               </Link>
-            </div>
+            </FadeIn>
           </div>
         </div>
       </div>

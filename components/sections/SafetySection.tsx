@@ -1,5 +1,10 @@
 import React from "react";
 import { SAFETY_PROTOCOLS } from "@/constants/data";
+import {
+  FadeIn,
+  StaggerContainer,
+  StaggerItem,
+} from "@/components/ui/MotionPrimitives";
 import { Scale, Wrench, CheckCircle2, ShieldAlert, BarChart3 } from "lucide-react";
 
 export function SafetySection() {
@@ -19,11 +24,11 @@ export function SafetySection() {
   };
 
   return (
-    <section className="w-full bg-primary text-surface py-16 lg:py-24">
+    <section className="w-full bg-primary text-surface py-16 lg:py-24 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           {/* Left Column: Heading & Philosophy */}
-          <div className="lg:col-span-5 space-y-3">
+          <FadeIn direction="right" className="lg:col-span-5 space-y-3">
             <div className="inline-flex items-center gap-2 text-tertiary-fixed font-code-spec text-xs uppercase tracking-widest">
               <Scale className="w-4 h-4 text-tertiary-fixed" />
               <span>Zero Tolerance Standard</span>
@@ -34,14 +39,17 @@ export function SafetySection() {
             <p className="font-body-md text-inverse-primary leading-relaxed text-[15px]">
               Roofing safety isn’t a secondary checklist—it is an engineered constraint integrated directly into daily project submittals, hazard assessments, and hoist mobilization.
             </p>
-          </div>
+          </FadeIn>
 
           {/* Right Column: 4 Credential Cards */}
-          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-6">
+          <StaggerContainer
+            staggerDelay={0.08}
+            className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-6"
+          >
             {SAFETY_PROTOCOLS.map((protocol, idx) => (
-              <div
+              <StaggerItem
                 key={idx}
-                className="bg-primary-container p-5 border border-primary-container/80 shadow-xs"
+                className="bg-primary-container p-5 border border-primary-container/80 hover:border-tertiary-fixed/40 transition-colors shadow-xs"
               >
                 <div className="flex items-center gap-2 text-tertiary-fixed mb-2">
                   {getIcon(idx)}
@@ -52,9 +60,9 @@ export function SafetySection() {
                 <p className="font-body-sm text-inverse-primary leading-relaxed text-[13px]">
                   {protocol.description}
                 </p>
-              </div>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
         </div>
       </div>
     </section>

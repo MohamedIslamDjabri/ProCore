@@ -3,7 +3,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { NAVIGATION_ITEMS, COMMERCIAL_SERVICES, SITE_CONFIG } from "@/constants/data";
+import { motion, AnimatePresence } from "motion/react";
+import { NAVIGATION_ITEMS, SITE_CONFIG } from "@/constants/data";
 import { BrandLogo } from "@/components/ui/BrandLogo";
 import {
   Phone,
@@ -206,77 +207,85 @@ export function Header() {
               >
                 <span>Roofing Systems</span>
                 <ChevronDown
-                  className={`w-3.5 h-3.5 transition-transform duration-150 ${
+                  className={`w-3.5 h-3.5 transition-transform duration-200 ${
                     systemsDropdownOpen ? "rotate-180 text-primary" : ""
                   }`}
                 />
               </button>
 
-              {systemsDropdownOpen && (
-                <div className="absolute top-full left-0 w-[540px] bg-surface-container-lowest border border-outline-variant shadow-xl z-50 p-4">
-                  <div className="flex items-center justify-between pb-2.5 mb-3 border-b border-outline-variant/60">
-                    <span className="font-code-spec text-[10px] uppercase tracking-widest text-secondary">
-                      COMMERCIAL ROOFING ASSEMBLIES & LIFECYCLE SPECS
-                    </span>
-                    <Link
-                      href="/commercial-roofing"
-                      onClick={() => setSystemsDropdownOpen(false)}
-                      className="font-label-sm text-[10px] uppercase tracking-wider text-on-tertiary-container hover:underline flex items-center gap-1 font-bold"
-                    >
-                      <span>All Systems</span>
-                      <ArrowRight className="w-3 h-3" />
-                    </Link>
-                  </div>
+              <AnimatePresence>
+                {systemsDropdownOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 8, scale: 0.98 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 6, scale: 0.98 }}
+                    transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
+                    className="absolute top-full left-0 w-[540px] bg-surface-container-lowest border border-outline-variant shadow-xl z-50 p-4"
+                  >
+                    <div className="flex items-center justify-between pb-2.5 mb-3 border-b border-outline-variant/60">
+                      <span className="font-code-spec text-[10px] uppercase tracking-widest text-secondary">
+                        COMMERCIAL ROOFING ASSEMBLIES & LIFECYCLE SPECS
+                      </span>
+                      <Link
+                        href="/commercial-roofing"
+                        onClick={() => setSystemsDropdownOpen(false)}
+                        className="font-label-sm text-[10px] uppercase tracking-wider text-on-tertiary-container hover:underline flex items-center gap-1 font-bold"
+                      >
+                        <span>All Systems</span>
+                        <ArrowRight className="w-3 h-3" />
+                      </Link>
+                    </div>
 
-                  <div className="grid grid-cols-2 gap-2.5">
-                    {SYSTEM_MENU_ITEMS.map((sys) => {
-                      const Icon = sys.icon;
-                      const isSubActive = pathname.startsWith(sys.href);
-                      return (
-                        <Link
-                          key={sys.href}
-                          href={sys.href}
-                          onClick={() => setSystemsDropdownOpen(false)}
-                          className={`group p-3 border transition-colors flex flex-col justify-between ${
-                            isSubActive
-                              ? "bg-surface-container-low border-on-tertiary-container"
-                              : "bg-surface border-outline-variant/40 hover:border-primary hover:bg-surface-container-low"
-                          }`}
-                        >
-                          <div>
-                            <div className="flex items-center justify-between gap-2 mb-1.5">
-                              <span className="font-code-spec text-[10px] text-secondary uppercase tracking-wider">
-                                {sys.spec}
-                              </span>
-                              <Icon className="w-4 h-4 text-on-tertiary-container shrink-0" />
+                    <div className="grid grid-cols-2 gap-2.5">
+                      {SYSTEM_MENU_ITEMS.map((sys) => {
+                        const Icon = sys.icon;
+                        const isSubActive = pathname.startsWith(sys.href);
+                        return (
+                          <Link
+                            key={sys.href}
+                            href={sys.href}
+                            onClick={() => setSystemsDropdownOpen(false)}
+                            className={`group p-3 border transition-all duration-150 flex flex-col justify-between ${
+                              isSubActive
+                                ? "bg-surface-container-low border-on-tertiary-container"
+                                : "bg-surface border-outline-variant/40 hover:border-primary hover:bg-surface-container-low hover:-translate-y-0.5"
+                            }`}
+                          >
+                            <div>
+                              <div className="flex items-center justify-between gap-2 mb-1.5">
+                                <span className="font-code-spec text-[10px] text-secondary uppercase tracking-wider">
+                                  {sys.spec}
+                                </span>
+                                <Icon className="w-4 h-4 text-on-tertiary-container shrink-0 group-hover:scale-110 transition-transform" />
+                              </div>
+                              <div className="font-title-md text-xs font-bold uppercase tracking-wider text-primary group-hover:text-on-tertiary-container transition-colors">
+                                {sys.label}
+                              </div>
+                              <p className="font-body-sm text-[11px] text-on-surface-variant mt-1 leading-snug">
+                                {sys.desc}
+                              </p>
                             </div>
-                            <div className="font-title-md text-xs font-bold uppercase tracking-wider text-primary group-hover:text-on-tertiary-container transition-colors">
-                              {sys.label}
-                            </div>
-                            <p className="font-body-sm text-[11px] text-on-surface-variant mt-1 leading-snug">
-                              {sys.desc}
-                            </p>
-                          </div>
-                        </Link>
-                      );
-                    })}
-                  </div>
+                          </Link>
+                        );
+                      })}
+                    </div>
 
-                  {/* Quick Secondary Links Bar inside Dropdown */}
-                  <div className="mt-3 pt-2.5 border-t border-outline-variant/60 flex items-center justify-between text-[11px] bg-surface-container-low px-3 py-2">
-                    <span className="font-label-sm text-secondary uppercase tracking-wider">
-                      Need immediate leak or storm dispatch?
-                    </span>
-                    <a
-                      href={`tel:${SITE_CONFIG.phoneRaw}`}
-                      className="font-title-md font-bold text-primary hover:text-on-tertiary-container flex items-center gap-1"
-                    >
-                      <Phone className="w-3 h-3 text-on-tertiary-container" />
-                      <span>{SITE_CONFIG.phone}</span>
-                    </a>
-                  </div>
-                </div>
-              )}
+                    {/* Quick Secondary Links Bar inside Dropdown */}
+                    <div className="mt-3 pt-2.5 border-t border-outline-variant/60 flex items-center justify-between text-[11px] bg-surface-container-low px-3 py-2">
+                      <span className="font-label-sm text-secondary uppercase tracking-wider">
+                        Need immediate leak or storm dispatch?
+                      </span>
+                      <a
+                        href={`tel:${SITE_CONFIG.phoneRaw}`}
+                        className="font-title-md font-bold text-primary hover:text-on-tertiary-container flex items-center gap-1"
+                      >
+                        <Phone className="w-3 h-3 text-on-tertiary-container" />
+                        <span>{SITE_CONFIG.phone}</span>
+                      </a>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
 
             {PRIMARY_DESKTOP_LINKS.map((item) => {
@@ -303,7 +312,7 @@ export function Header() {
           <div className="flex items-center gap-3 shrink-0">
             <Link
               href="/contact"
-              className="hidden sm:inline-flex bg-tertiary-container text-on-tertiary hover:bg-tertiary font-title uppercase tracking-wider text-[11px] xl:text-xs font-bold px-4 xl:px-5 py-2.5 rounded-none transition-colors items-center gap-2 border border-tertiary shadow-xs whitespace-nowrap shrink-0"
+              className="hidden sm:inline-flex bg-tertiary-container text-on-tertiary hover:bg-tertiary font-title uppercase tracking-wider text-[11px] xl:text-xs font-bold px-4 xl:px-5 py-2.5 rounded-none transition-all duration-200 hover:-translate-y-0.5 items-center gap-2 border border-tertiary shadow-xs whitespace-nowrap shrink-0"
             >
               <FileText className="w-3.5 h-3.5 text-tertiary-fixed shrink-0" />
               <span>{SITE_CONFIG.primaryCta}</span>
@@ -330,74 +339,82 @@ export function Header() {
       </div>
 
       {/* Mobile & Tablet Menu Drawer */}
-      {mobileMenuOpen && (
-        <div className="lg:hidden bg-surface-container-lowest border-b border-outline-variant shadow-lg max-h-[calc(100vh-7rem)] overflow-y-auto">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 space-y-3">
-            <nav
-              className="grid grid-cols-1 sm:grid-cols-2 gap-1 sm:gap-2 divide-y sm:divide-y-0 divide-outline-variant/30"
-              aria-label="Mobile Navigation"
-            >
-              {NAVIGATION_ITEMS.map((item) => {
-                const isActive =
-                  item.href === "/"
-                    ? pathname === "/"
-                    : pathname.startsWith(item.href);
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            className="lg:hidden bg-surface-container-lowest border-b border-outline-variant shadow-lg max-h-[calc(100vh-7rem)] overflow-y-auto"
+          >
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 space-y-3">
+              <nav
+                className="grid grid-cols-1 sm:grid-cols-2 gap-1 sm:gap-2 divide-y sm:divide-y-0 divide-outline-variant/30"
+                aria-label="Mobile Navigation"
+              >
+                {NAVIGATION_ITEMS.map((item) => {
+                  const isActive =
+                    item.href === "/"
+                      ? pathname === "/"
+                      : pathname.startsWith(item.href);
 
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className={`py-2.5 px-3 font-title-md uppercase tracking-wider text-xs sm:text-sm flex items-center justify-between transition-colors ${
-                      isActive
-                        ? "text-primary font-bold border-l-4 border-on-tertiary-container bg-surface-container-low"
-                        : "text-on-surface-variant hover:text-primary hover:bg-surface-container-low/50"
-                    }`}
-                  >
-                    <span>{item.label}</span>
-                    <ArrowRight className="w-4 h-4 text-secondary/60 shrink-0" />
-                  </Link>
-                );
-              })}
-            </nav>
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className={`py-2.5 px-3 font-title-md uppercase tracking-wider text-xs sm:text-sm flex items-center justify-between transition-colors ${
+                        isActive
+                          ? "text-primary font-bold border-l-4 border-on-tertiary-container bg-surface-container-low"
+                          : "text-on-surface-variant hover:text-primary hover:bg-surface-container-low/50"
+                      }`}
+                    >
+                      <span>{item.label}</span>
+                      <ArrowRight className="w-4 h-4 text-secondary/60 shrink-0" />
+                    </Link>
+                  );
+                })}
+              </nav>
 
-            <div className="pt-3 border-t border-outline-variant/40 grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-              <button
-                type="button"
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  if (typeof window !== "undefined") {
-                    window.dispatchEvent(
-                      new CustomEvent("open-field-command-ai", {
-                        detail: { mode: "voice" },
-                      })
-                    );
-                  }
-                }}
-                className="flex items-center justify-center gap-2 w-full py-2.5 px-3 bg-tertiary-container text-on-tertiary font-title-md text-xs uppercase tracking-wider border border-tertiary cursor-pointer shadow-xs font-bold"
-              >
-                <PhoneCall className="w-3.5 h-3.5 text-tertiary-fixed shrink-0" />
-                <span>AI Voice Dispatch</span>
-              </button>
-              <a
-                href={`tel:${SITE_CONFIG.phoneRaw}`}
-                className="flex items-center justify-center gap-2 w-full py-2.5 px-3 bg-primary text-on-primary font-title-md text-xs uppercase tracking-wider font-bold"
-              >
-                <Phone className="w-3.5 h-3.5 text-tertiary-fixed shrink-0" />
-                <span>Call: {SITE_CONFIG.phone}</span>
-              </a>
-              <Link
-                href="/contact"
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-center gap-2 w-full py-2.5 px-3 bg-surface-container text-primary font-title-md text-xs uppercase tracking-wider border border-outline-variant/50 font-bold"
-              >
-                <FileText className="w-3.5 h-3.5 text-primary shrink-0" />
-                <span>{SITE_CONFIG.primaryCta}</span>
-              </Link>
+              <div className="pt-3 border-t border-outline-variant/40 grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    if (typeof window !== "undefined") {
+                      window.dispatchEvent(
+                        new CustomEvent("open-field-command-ai", {
+                          detail: { mode: "voice" },
+                        })
+                      );
+                    }
+                  }}
+                  className="flex items-center justify-center gap-2 w-full py-2.5 px-3 bg-tertiary-container text-on-tertiary font-title-md text-xs uppercase tracking-wider border border-tertiary cursor-pointer shadow-xs font-bold"
+                >
+                  <PhoneCall className="w-3.5 h-3.5 text-tertiary-fixed shrink-0" />
+                  <span>AI Voice Dispatch</span>
+                </button>
+                <a
+                  href={`tel:${SITE_CONFIG.phoneRaw}`}
+                  className="flex items-center justify-center gap-2 w-full py-2.5 px-3 bg-primary text-on-primary font-title-md text-xs uppercase tracking-wider font-bold"
+                >
+                  <Phone className="w-3.5 h-3.5 text-tertiary-fixed shrink-0" />
+                  <span>Call: {SITE_CONFIG.phone}</span>
+                </a>
+                <Link
+                  href="/contact"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center justify-center gap-2 w-full py-2.5 px-3 bg-surface-container text-primary font-title-md text-xs uppercase tracking-wider border border-outline-variant/50 font-bold"
+                >
+                  <FileText className="w-3.5 h-3.5 text-primary shrink-0" />
+                  <span>{SITE_CONFIG.primaryCta}</span>
+                </Link>
+              </div>
             </div>
-          </div>
-        </div>
-      )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }

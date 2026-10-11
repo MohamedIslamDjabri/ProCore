@@ -1,11 +1,16 @@
 import React from "react";
 import { TECHNICAL_DEEP_DIVE_STAGES } from "@/constants/data";
+import {
+  FadeIn,
+  StaggerContainer,
+  StaggerItem,
+} from "@/components/ui/MotionPrimitives";
 
 export function TechnicalDeepDive() {
   return (
     <section className="w-full bg-surface py-16 lg:py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 space-y-12">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <FadeIn className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="space-y-2">
             <span className="font-label-md uppercase tracking-wider text-secondary text-xs">
               FIELD ENGINEERING STANDARDS
@@ -17,17 +22,20 @@ export function TechnicalDeepDive() {
           <p className="font-body-md text-on-surface-variant max-w-md text-[15px] leading-relaxed">
             Zero-failure flat roofs depend on assembly execution at four crucial stages. Explore our strict construction tolerances below.
           </p>
-        </div>
+        </FadeIn>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+        <StaggerContainer
+          staggerDelay={0.09}
+          className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8"
+        >
           {TECHNICAL_DEEP_DIVE_STAGES.map((stage) => (
-            <div
+            <StaggerItem
               key={stage.step}
-              className="bg-surface-container-lowest p-6 lg:p-8 shadow-xs border border-outline-variant/30 space-y-4 flex flex-col justify-between"
+              className="bg-surface-container-lowest p-6 lg:p-8 shadow-xs border border-outline-variant/30 hover:border-primary/40 hover:shadow-md transition-all duration-300 space-y-4 flex flex-col justify-between group"
             >
               <div className="space-y-4">
                 <div className="flex items-start justify-between">
-                  <div className="w-10 h-10 bg-surface-container text-primary flex items-center justify-center font-bold text-sm">
+                  <div className="w-10 h-10 bg-surface-container group-hover:bg-primary group-hover:text-on-primary transition-colors text-primary flex items-center justify-center font-bold text-sm">
                     {stage.step}
                   </div>
                   <span className="font-label-sm px-2.5 py-1 bg-surface-container-low text-secondary uppercase text-[11px] font-semibold">
@@ -42,7 +50,7 @@ export function TechnicalDeepDive() {
                 </p>
               </div>
 
-              <div className="p-3.5 bg-surface-container-low space-y-1 border-l-2 border-primary">
+              <div className="p-3.5 bg-surface-container-low space-y-1 border-l-2 border-primary group-hover:border-on-tertiary-container transition-colors">
                 <span className="font-label-sm text-secondary uppercase block text-[10px] tracking-wider font-semibold">
                   {stage.protocolTitle}
                 </span>
@@ -50,9 +58,9 @@ export function TechnicalDeepDive() {
                   {stage.protocolDesc}
                 </span>
               </div>
-            </div>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
       </div>
     </section>
   );

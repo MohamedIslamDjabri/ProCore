@@ -2,6 +2,11 @@ import React from "react";
 import Link from "next/link";
 import { INDUSTRIES_SERVED } from "@/constants/data";
 import {
+  FadeIn,
+  StaggerContainer,
+  StaggerItem,
+} from "@/components/ui/MotionPrimitives";
+import {
   Warehouse,
   Cog,
   Building,
@@ -50,7 +55,7 @@ export function IndustriesGrid({ showIntro = true }: IndustriesGridProps) {
     <section className="w-full bg-surface py-16 lg:py-24" id="industries">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
         {showIntro && (
-          <div className="max-w-3xl mb-12 lg:mb-16">
+          <FadeIn className="max-w-3xl mb-12 lg:mb-16">
             <span className="font-label-md uppercase tracking-widest text-secondary text-xs">
               Sector Competency
             </span>
@@ -60,18 +65,21 @@ export function IndustriesGrid({ showIntro = true }: IndustriesGridProps) {
             <p className="font-body-md text-on-surface-variant mt-2 text-[15px] leading-relaxed">
               Each facility typology demands specific membrane specifications: from chemical exhaust resistance in heavy plants to acoustic serenity in healthcare environments.
             </p>
-          </div>
+          </FadeIn>
         )}
 
         {/* 10-Item Structured Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 lg:gap-5">
+        <StaggerContainer
+          staggerDelay={0.05}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 lg:gap-5"
+        >
           {INDUSTRIES_SERVED.map((ind) => (
-            <div
+            <StaggerItem
               key={ind.id}
-              className="bg-surface-container-lowest p-5 flex flex-col justify-between shadow-xs border border-outline-variant/30 hover:border-primary/40 transition-colors"
+              className="bg-surface-container-lowest p-5 flex flex-col justify-between shadow-xs border border-outline-variant/30 hover:border-primary/50 hover:shadow-md transition-all duration-300 group"
             >
               <div>
-                <div className="flex items-center justify-between text-secondary mb-3">
+                <div className="flex items-center justify-between text-secondary group-hover:text-on-tertiary-container transition-colors mb-3">
                   {getIndustryIcon(ind.code)}
                   <span className="font-code-spec text-secondary text-xs font-semibold">
                     {ind.code}
@@ -85,7 +93,7 @@ export function IndustriesGrid({ showIntro = true }: IndustriesGridProps) {
                 </p>
               </div>
 
-              <div className="mt-5 pt-2.5 bg-surface-container-high px-2.5 py-1.5 border-l-2 border-primary">
+              <div className="mt-5 pt-2.5 bg-surface-container-high px-2.5 py-1.5 border-l-2 border-primary group-hover:border-on-tertiary-container transition-colors">
                 <span className="font-label-sm block text-secondary uppercase text-[10px] tracking-wider font-semibold">
                   OPTIMAL MATCH:
                 </span>
@@ -93,18 +101,18 @@ export function IndustriesGrid({ showIntro = true }: IndustriesGridProps) {
                   {ind.optimalMatch}
                 </span>
               </div>
-            </div>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
 
-        <div className="mt-12 text-center">
+        <FadeIn delay={0.2} className="mt-12 text-center">
           <Link
             href="/industries-served"
             className="inline-flex items-center gap-2 font-title-md uppercase tracking-wider text-xs text-primary hover:text-secondary font-bold underline underline-offset-4"
           >
             <span>Explore All Industry Specifications & Case Studies</span>
           </Link>
-        </div>
+        </FadeIn>
       </div>
     </section>
   );
